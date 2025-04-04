@@ -1,9 +1,10 @@
-package tests.onlineshopping;
+package onlineshopping;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import onlineshopping.PaymentService;
 
@@ -11,7 +12,7 @@ public class TestPaymentService {
     
     private PaymentService paymentService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         paymentService = new PaymentService();
     }

@@ -1,9 +1,11 @@
-package tests.onlineshopping;
+package onlineshopping;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import onlineshopping.Customer;
 import onlineshopping.CustomerType;
@@ -11,7 +13,7 @@ import onlineshopping.CustomerType;
 public class TestCustomer {
 
     private Customer customer;
-    @Before
+    @BeforeEach
     public void setUp() {
         customer = new Customer("CustomerName", CustomerType.REGULAR);
     }
@@ -19,14 +21,14 @@ public class TestCustomer {
     @Test
     public void testSetGetName() {
         customer.setName("NewName");
-        assertTrue("The name should be NewName", customer.getName().equals("NewName"));
+        assertTrue( customer.getName().equals("NewName"), () -> "The name should be NewName");
     }
 
 
     @Test
     public void testSetGetCusomterType() {
         customer.setCustomerType(CustomerType.PREMIUM);
-        assertTrue("The customer type should be premium", customer.getCustomerType().equals(CustomerType.PREMIUM));    
+        assertTrue( customer.getCustomerType().equals(CustomerType.PREMIUM), () -> "The customer type should be premium");
     }
 
     

@@ -1,14 +1,15 @@
-package tests.onlineshopping;
+package onlineshopping;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import onlineshopping.CartItem;
 import onlineshopping.InventoryService;
@@ -18,7 +19,7 @@ public class TestInventoryService {
 
     private InventoryService inventoryService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         inventoryService = new InventoryService();
     }

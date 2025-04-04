@@ -1,10 +1,11 @@
-package tests.onlineshopping;
+package onlineshopping;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import onlineshopping.CartItem;
 import onlineshopping.Product;
@@ -21,7 +22,7 @@ public class TestCartItem {
         cartItem = new CartItem(mockProduct, quantity1);
         Product expected = mockProduct;
         Product observed = cartItem.getProduct();
-        assertTrue("The observed product should be the mockProduct", expected.equals(observed));
+        assertTrue(expected.equals(observed), () -> "The observed product should be the mockProduct");
     }
 
     @Test
@@ -32,7 +33,7 @@ public class TestCartItem {
         cartItem = new CartItem(mockProduct, quantity1);
         int expected = quantity1;
         int observed = cartItem.getQuantity();
-        assertTrue("The observed quantity should be 2", expected == observed);
+        assertTrue(expected == observed, () -> "The observed quantity should be 2");
     }
 
     @Test
@@ -43,6 +44,6 @@ public class TestCartItem {
         cartItem = new CartItem(mockProduct, quantity1);
         double expected = 200.0;
         double observed = cartItem.getTotalPrice();
-        assertTrue("The total price should be 200.0", expected == observed);
+        assertTrue(expected == observed, "The total price should be 200.0");
     }
 }

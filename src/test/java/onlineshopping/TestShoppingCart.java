@@ -1,7 +1,7 @@
-package tests.onlineshopping;
+package onlineshopping;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 
@@ -9,8 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import onlineshopping.CartItem;
 import onlineshopping.Customer;
@@ -26,14 +26,14 @@ public class TestShoppingCart {
     private CartItem item2;
 
 
-    @Before
+    @BeforeEach
     public void createShoppingCart() {
         Customer customer = new Customer("Mr White", CustomerType.REGULAR);
         DiscountService discountService = new DiscountService();
         cart = new ShoppingCart(customer, discountService);
     }
 
-    @Before
+    @BeforeEach
     public void createItems() {
         Product product1 = new Product("Arbitrary Item", 1000.0, 10);
         item1 = new CartItem(product1, 1);
@@ -46,8 +46,7 @@ public class TestShoppingCart {
     @Test
     public void testCartIsEmpty() {
         List<CartItem> observed = cart.getItems();
-        System.out.println("Yooo" + observed);
-        assertTrue("The cart should be empty and not throw any errors", observed.isEmpty());
+        assertTrue(observed.isEmpty(), () -> "The cart should be empty and not throw any errors");
     }
     
     @Test 
@@ -57,9 +56,8 @@ public class TestShoppingCart {
 
         int expected_size = 1;
         CartItem expected_item = item1;
-
-        assertEquals("The cart should have 1 item", expected_size, observed.size());
-        assertEquals("The observed item in the cart should be item1", expected_item, observed.get(0));
+        assertEquals(expected_size, observed.size(), "The cart should have 1 item");
+        assertEquals(expected_item, observed.get(0), "The observed item in the cart should be item1");
     }
 
     @Test
@@ -72,10 +70,9 @@ public class TestShoppingCart {
             int expected_size = 2;
             CartItem expected_item1 = item1;
             CartItem expected_item2 = item2;
-
-            assertEquals("The cart should have 2 items", expected_size, observed.size());
-            assertEquals("The observed item at index 0 should be item1", expected_item1, observed.get(0));
-            assertEquals("The observed item at index 1 should be item2", expected_item2, observed.get(1));
+            assertEquals(expected_size, observed.size(), "The cart should have 2 items");
+            assertEquals(expected_item1, observed.get(0), "The observed item at index 0 should be item1");
+            assertEquals(expected_item2, observed.get(1), "The observed item at index 1 should be item2");
     }
 
     @Test
@@ -86,7 +83,7 @@ public class TestShoppingCart {
             cart.removeItem(item1);
             
             List<CartItem> observed = cart.getItems();
-            assertTrue("The cart should be empty and not throw any errors", observed.isEmpty());
+            assertTrue(observed.isEmpty(), () -> "The cart should be empty and not throw any errors");
     } 
 
     @Test
@@ -98,8 +95,8 @@ public class TestShoppingCart {
                 cart.removeItem(item1);
                 
                 List<CartItem> observed = cart.getItems();
-                assertEquals("The cart should have 1 item", 1, observed.size());
-                assertEquals("The observed item in the cart should be item2", item2, observed.get(0));
+                assertEquals(1, observed.size(), "The cart should have 1 item");
+                assertEquals(item2, observed.get(0), "The observed item in the cart should be item2");
     }
 
     @Test
@@ -112,7 +109,7 @@ public class TestShoppingCart {
                 cart.removeItem(item2);
                 
                 List<CartItem> observed = cart.getItems();
-                assertTrue("The cart should be empty and not throw any errors", observed.isEmpty());
+                assertTrue(observed.isEmpty(), () -> "The cart should be empty and not throw any errors");
     }
 
     @Test
@@ -120,8 +117,7 @@ public class TestShoppingCart {
         assertDoesNotThrow(() -> cart.removeItem(item1), "The cart should not throw any errors when removing an item from an empty cart");
         
         List<CartItem> observed = cart.getItems();
-        assertTrue("The cart should be empty and not throw any errors", observed.isEmpty());
-
+        assertTrue(observed.isEmpty(), () -> "The cart should be empty and not throw any errors");
     }
 
     @Test
@@ -132,8 +128,8 @@ public class TestShoppingCart {
         }, "The cart should not throw any errors when adding the same item twice");
         
         List<CartItem> observed = cart.getItems();
-        assertEquals("The observed item in the cart at index 0 should be item1", item1, observed.get(0));
-        assertEquals("The observed item in the cart at index 0 should have the quantity of 2", 2, observed.get(0).getQuantity());
+        assertEquals(item1, observed.get(0), "The observed item in the cart at index 0 should be item1");
+        assertEquals(2, observed.get(0).getQuantity(), "The observed item in the cart at index 0 should have the quantity of 2");
     }
 
     /* TESTS FOR THE REQUIREMENT #2 (Calculate Total Price Before Discounts) */
@@ -141,7 +137,7 @@ public class TestShoppingCart {
     public void testCalculateTotalEmptyCart() {
         double observed = cart.calculateTotal();
         double expected = 0.0;
-        assertEquals("The empty cart should have the total 0", expected, observed, 0.0);
+        assertEquals(expected, observed, "The empty cart should have the total 0");
     }
 
     @Test
@@ -149,7 +145,7 @@ public class TestShoppingCart {
         cart.addItem(item1);
         double observed = cart.calculateTotal();
         double expected = 1000.0;
-        assertEquals("The cart should have the total 1000", expected, observed, 0.0);
+        assertEquals(expected, observed, "The cart should have the total 1000");
     }
 
     @Test
@@ -168,7 +164,7 @@ public class TestShoppingCart {
         cart.addItem(itemWithTwoQuantities);
         double observed = cart.calculateTotal();
         double expected = 2000.0;
-        assertEquals("The cart should have the total 2000", expected, observed, 0.0);
+        assertEquals(expected, observed,"The cart should have the total 2000");
     }
 
     @Test
@@ -179,8 +175,7 @@ public class TestShoppingCart {
         cart.addItem(item2);
         double observed = cart.calculateTotal();
         double expected = 3000.0;
-
-        assertEquals("The cart should have the total 3000", expected, observed, 0.0);
+        assertEquals(expected, observed, "The cart should have the total 3000");
     }
 
     @Test
@@ -192,8 +187,7 @@ public class TestShoppingCart {
         cart.removeItem(item1);
         double observed = cart.calculateTotal();
         double expected = 2000.0;
-
-        assertEquals("The cart should have the total 2000", expected, observed, 0.0);
+        assertEquals(expected, observed, "The cart should have the total 2000");
     }
 
     @Test
@@ -206,8 +200,7 @@ public class TestShoppingCart {
         cart.setPromotionActive(true);
         double observed = cart.calculateTotal();
         double expected = 3000.0;
-
-        assertEquals("Total should remain 3000 after applying coupon and promotion",expected, observed, 0.0);
+        assertEquals(expected, observed,"Total should remain 3000 after applying coupon and promotion");
     }
 
     /* TESTS FOR THE REQUIREMENT #8 (Discounts in Order) */
@@ -215,7 +208,7 @@ public class TestShoppingCart {
     private Customer vipCustomer;
 
 
-    @Before
+    @BeforeEach
     public void setUpCartWithDiscounts() {
         vipCustomer = new Customer("Mr White", CustomerType.VIP);
         cartWithDiscounts = new ShoppingCart(vipCustomer, new DiscountService());
@@ -230,7 +223,7 @@ public class TestShoppingCart {
     public void testCalculateFinalPriceWithoutPromotion() {
         double observed = cartWithDiscounts.calculateFinalPrice();
         double expected = 836.0;
-        assertEquals("Total is 1100, first bundle discount is applied (1100-5 = 1095), then coupon is applied (1095-50 = 1045), then 10%+10% discounts are applied, hence we expect 1045*(1-0.2) = 836", expected, observed, 0.0);
+        assertEquals(expected, observed, "Total is 1100, first bundle discount is applied (1100-5 = 1095), then coupon is applied (1095-50 = 1045), then 10%+10% discounts are applied, hence we expect 1045*(1-0.2) = 836");
     }
 
     @Test
@@ -238,14 +231,15 @@ public class TestShoppingCart {
         cartWithDiscounts.setPromotionActive(true);
         double observed = cartWithDiscounts.calculateFinalPrice();
         double expected = 574.75;
-        assertEquals("Total is 1100, first bundle discount is applied (1100-5 = 1095), then coupon is applied (1095-50 = 1045), then 10%+10%+25% discounts are applied, hence we expect 1045*(1-0.45) = 547.75", expected, observed, 0.0);
+        assertEquals(expected, observed, "Total is 1100, first bundle discount is applied (1100-5 = 1095), then coupon is applied (1095-50 = 1045), then 10%+10%+25% discounts are applied, hence we expect 1045*(1-0.45) = 547.75");
+
     }
     
 
     /* TESTS FOR THE REQUIREMENT #9 (Receipt) */
     private ShoppingCart spyCart;
 
-    @Before
+    @BeforeEach
     public void setUpSpyCart() {
         spyCart = spy(new ShoppingCart(new Customer("Mr White", CustomerType.REGULAR), new DiscountService()));
 }
@@ -286,7 +280,6 @@ public class TestShoppingCart {
 
         System.setOut(standardOut);
 
-
         // Assert: Check if the output matches what we expect
         String expectedOutput = "----- Shopping Cart Receipt -----\n" +
                 "Product 1 - 2 x $10.0\n" +
@@ -294,12 +287,12 @@ public class TestShoppingCart {
                 "---------------------------------\n" +
                 "Total before discount: $40.0\n" +
                 "Final price after discounts: $36.0\n";
-        
-        assertEquals("The cart should print the receipt as in the expected", expectedOutput, observed);
+
+        assertEquals(expectedOutput, observed, "The cart should print the receipt as expected");
     }
 
 
-
 }
-    
+
+
 

@@ -1,7 +1,7 @@
-package tests.onlineshopping;
+package onlineshopping;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -9,7 +9,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import onlineshopping.CartItem;
 import onlineshopping.InventoryService;
@@ -37,7 +38,7 @@ public class TestOrderService {
         when(mockPaymentService.processPayment(cardNumber, 100.0)).thenReturn(true);
 
         orderService = new OrderService(mockPaymentService, mockInventoryService);
-        assertTrue("The order should be placed", orderService.placeOrder(mockCart, cardNumber));
+        assertTrue(orderService.placeOrder(mockCart, cardNumber), "The order should be placed");
     }
 
     @Test
@@ -56,7 +57,7 @@ public class TestOrderService {
         when(mockPaymentService.processPayment(cardNumber, 100.0)).thenThrow(new Exception());
 
         orderService = new OrderService(mockPaymentService, mockInventoryService);
-        assertFalse("Placing order shoud not happen", orderService.placeOrder(mockCart, cardNumber));
+        assertFalse(orderService.placeOrder(mockCart, cardNumber), "Placing order shoud not happen");
     }
 
     @Test
@@ -75,7 +76,7 @@ public class TestOrderService {
         doThrow(new IllegalArgumentException()).when(mockInventoryService).updateStock(mockItem);
 
         orderService = new OrderService(mockPaymentService, mockInventoryService);
-        assertFalse("Placing order should not hapen", orderService.placeOrder(mockCart, cardNumber));
+        assertFalse(orderService.placeOrder(mockCart, cardNumber), "Placing order should not hapen");
     }
 
     @Test
@@ -93,6 +94,6 @@ public class TestOrderService {
         doThrow(new IllegalArgumentException()).when(mockCart).calculateTotal();
 
         orderService = new OrderService(mockPaymentService, mockInventoryService);
-        assertFalse("Placing order should not happen", orderService.placeOrder(mockCart, cardNumber));
+        assertFalse(orderService.placeOrder(mockCart, cardNumber), "Placing order should not happen");
     }
 }
